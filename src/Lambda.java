@@ -10,7 +10,7 @@ public class Lambda {
         do{
             System.out.print(">");
             input = in.nextLine();
-        } while (!input.equals("exit"));
+        } while (!input.equals("Exit"));
     }
 
 }
