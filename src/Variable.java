@@ -1,11 +1,21 @@
-/*public class Variable {
+public class Variable {
     private String name;
+    private String value;
 
-    public Variable(String name, E gvalue=null) {
+    public Variable(String name, String value) {
         this.name = name;
+        this.value = value;
+
+    }
+
+    public Variable(String name) {
+        this.name = name;
+        this.value = name;
     }
 
     public String toString() {
-        return name;
+        if(value.equals(""))
+            return "";
+        return value + "\n";
     }
-}*/
+}

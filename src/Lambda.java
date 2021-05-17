@@ -7,10 +7,15 @@ public class Lambda {
     public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);
-        do{
+        System.out.print(">");
+        input = in.nextLine();
+        while (!input.equals("exit")) {
+            Variable var = new Variable(input);
+            System.out.print(var);
             System.out.print(">");
             input = in.nextLine();
-        } while (!input.equals("Exit"));
+        }
+        System.out.println("Goodbye!");
     }
 
 }
