@@ -1,9 +1,25 @@
 import java.util.ArrayList;
 
 public class Expression {
-    private ArrayList<Variable> expr;
-    public Expression(ArrayList<Variable> expr) {
-        this.expr = expr;
+
+    public Variable right;
+    public Variable left;
+    public Expression rightExp;
+    public Expression leftExp;
+
+    public Expression(Variable right, Variable left){
+        this.right = right;
+        this.left = left;
+
+    }
+
+    public Expression(Expression rightExp, Variable left){
+        this.rightExp = rightExp;
+        this.left = left;
+    }
+
+    public String toString(){
+        return "(" + right.toString() + " " + left.toString() + ")";
     }
 
 }

@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Tokenizer {
@@ -8,8 +10,12 @@ public class Tokenizer {
         this.input = input;
     }
 
-    public String[] tokens(){
-        return input.toString().split(" ");
+    public ArrayList<Variable> tokens(){
+        String[] varStr = input.toString().split(" ");
+        ArrayList<Variable> varList = new ArrayList<>();
+        for (int i = 0; i < varStr.length; i++){
+            varList.add(new Variable(varStr[i]));
+        }
+        return varList;
     }
-
 }

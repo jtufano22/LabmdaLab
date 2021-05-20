@@ -1,23 +1,26 @@
+import java.util.ArrayList;
+
 public class Lexer {
 
-    private String[] tokens;
+    private ArrayList<Variable> tokens;
+    private Expression exp;
 
-    public Lexer (String[] tokens){
+    public Lexer (ArrayList<Variable> tokens){
         this.tokens = tokens;
     }
 
-    public String lexed(){
+    public Expression lexed(){
         int pos = 1;
-        while (pos != tokens.length){
-            tokens[pos] = parenCreator(tokens[pos-1], tokens[pos]);
+        while (tokens.size() != 1 && pos < tokens.size()){
+            if (exp == null){
+                exp = new Expression(tokens.get(pos-1), tokens.get(pos));
+            }
+            else{
+                exp = new Expression(exp, tokens.get(pos));
+            }
             pos++;
         }
-        return tokens[tokens.length - 1];
+        return exp;
     }
-
-    public String parenCreator(String first, String second){
-        return "(" + first + " " + second + ")";
-    }
-
 
 }
