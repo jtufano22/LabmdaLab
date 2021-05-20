@@ -14,6 +14,6 @@ public class Variable {
     public String toString() {
         if(value.equals(""))
             return "";
-        return value + "\n";
+        return value;
     }
 }
