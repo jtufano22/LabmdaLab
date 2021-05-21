@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public class Lexer {
 
-    private ArrayList<Variable> tokens;
+    private ArrayList<String> tokens;
     private Expression exp;
 
-    public Lexer (ArrayList<Variable> tokens){
+    public Lexer (ArrayList<String> tokens){
         this.tokens = tokens;
     }
 

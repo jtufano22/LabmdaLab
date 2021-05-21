@@ -1,4 +1,4 @@
-import sun.tools.jstat.Token;
+// import sun.tools.jstat.Token;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -19,10 +19,14 @@ public class Lambda {
                 input = input.substring(0, pos).trim();
             }
             Variable var = new Variable(input);
-            Tokenizer t = new Tokenizer(var);
-            Lexer l = new Lexer(t.tokens());
-            System.out.println(l.lexed());
-            System.out.println();
+            if(input.length() == 1) {
+                System.out.println(input);
+            }
+            else {
+                Tokenizer t = new Tokenizer(var);
+                Lexer l = new Lexer(t.tokens());
+                System.out.println(l.lexed());
+            }
             System.out.print(">");
             input = in.nextLine();
         }

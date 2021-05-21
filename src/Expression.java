@@ -2,24 +2,31 @@ import java.util.ArrayList;
 
 public class Expression {
 
-    public Variable right;
-    public Variable left;
+    public String right;
+    public String left;
     public Expression rightExp;
     public Expression leftExp;
 
-    public Expression(Variable right, Variable left){
+    //for vars
+    public Expression () {
+    }
+
+    public Expression(String left, String right){
         this.right = right;
         this.left = left;
 
     }
 
-    public Expression(Expression rightExp, Variable left){
-        this.rightExp = rightExp;
-        this.left = left;
+    public Expression(Expression leftExp, String right){
+        this.leftExp = leftExp;
+        this.right = right;
     }
 
     public String toString(){
-        return "(" + right.toString() + " " + left.toString() + ")";
+        if(leftExp != null) {
+            return "(" + leftExp + " " + right + ")";
+        }
+        return "(" + left + " " + right + ")";
     }
 
 }

@@ -10,11 +10,11 @@ public class Tokenizer {
         this.input = input;
     }
 
-    public ArrayList<Variable> tokens(){
+    public ArrayList<String> tokens(){
         String[] varStr = input.toString().split(" ");
-        ArrayList<Variable> varList = new ArrayList<>();
+        ArrayList<String> varList = new ArrayList<>();
         for (int i = 0; i < varStr.length; i++){
-            varList.add(new Variable(varStr[i]));
+            varList.add(varStr[i]);
         }
         return varList;
     }
