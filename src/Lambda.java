@@ -11,19 +11,19 @@ public class Lambda {
 
         Scanner in = new Scanner(System.in);
         System.out.print(">");
-        input = in.nextLine();
+        input = in.nextLine().replaceAll("\uFEFF", "");
 
         while (!input.equals("exit")) {
             int pos = input.indexOf(';');
             if (pos >= 0) {
                 input = input.substring(0, pos).trim();
             }
-            Variable var = new Variable(input);
+            Expression expr = new Expression(input);
             if(input.length() == 1) {
                 System.out.println(input);
             }
             else {
-                Tokenizer t = new Tokenizer(var);
+                Tokenizer t = new Tokenizer(expr);
                 Lexer l = new Lexer(t.tokens());
                 System.out.println(l.lexed());
             }
