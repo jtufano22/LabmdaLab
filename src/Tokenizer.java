@@ -11,10 +11,27 @@ public class Tokenizer {
     }
 
     public ArrayList<String> tokens(){
-        String[] varStr = input.toString().split(" ");
         ArrayList<String> varList = new ArrayList<>();
-        for (int i = 0; i < varStr.length; i++){
-            varList.add(varStr[i]);
+        int pos = 0;
+        String paren = "";
+        while (pos != input.toString().length()){
+            if (input.toString().charAt(pos) == '('){
+                paren += "(";
+                while (input.toString().charAt(pos++) != ')'){
+                    paren += input.toString().charAt(pos);
+                }
+                varList.add(paren);
+                paren = "";
+            }
+            else{
+                if (input.toString().charAt(pos) == ' '){
+                    pos++;
+                }
+                else{
+                    varList.add(input.toString().substring(pos, pos+1));
+                    pos++;
+                }
+            }
         }
         return varList;
     }
