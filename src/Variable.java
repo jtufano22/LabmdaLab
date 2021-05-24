@@ -1,4 +1,4 @@
-public class Variable extends Expression{
+public class Variable implements Expression{
     private String name;
     private String value;
 
@@ -18,5 +18,8 @@ public class Variable extends Expression{
         return value;
     }
 
+    public String getName(){
+        return this.name;
+    }
 
 }

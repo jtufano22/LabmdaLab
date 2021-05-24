@@ -1,4 +1,4 @@
-public class Function extends Expression{
+public class Function implements Expression{
     private Expression expr;
     private Variable var;
 

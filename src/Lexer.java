@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Lexer {
 
     private ArrayList<String> tokens;
-    private Expression exp;
+    private Application app;
 
     public Lexer (ArrayList<String> tokens){
         this.tokens = tokens;
@@ -12,15 +12,18 @@ public class Lexer {
     public Expression lexed(){
         int pos = 1;
         while (tokens.size() != 1 && pos < tokens.size()){
-            if (exp == null){
-                exp = new Application(tokens.get(pos-1), tokens.get(pos));
+            if (app == null){
+                app = new Application(new Variable(tokens.get(pos-1)), new Variable(tokens.get(pos)));
             }
             else{
-                exp = new Application(exp, tokens.get(pos));
+                app = new Application(app, new Variable(tokens.get(pos)));
             }
             pos++;
         }
-        return exp;
+        if (tokens.size() == 1){
+            return new Variable(tokens.get(0));
+        }
+        return app;
     }
 
 }

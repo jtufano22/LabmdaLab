@@ -1,7 +1,4 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Stack;
 
 public class Tokenizer {
 
@@ -11,39 +8,53 @@ public class Tokenizer {
         this.input = input;
     }
 
+    public char getChar(int pos){
+        return input.toString().charAt(pos);
+    }
+
     public ArrayList<String> tokens(){
         ArrayList<String> varList = new ArrayList<>();
+        char in;
         int pos = 0;
-        String paren = "";
+        String ret = "";
         int parenpos = 0;
         while (pos != input.toString().length()){
-            if (input.toString().charAt(pos) == '('){
-                paren += "(";
+            in = getChar(pos);
+            if (in == '('){
+                ret += "(";
                 pos++;
                 parenpos++;
                 while (parenpos != 0){
-                    if (input.toString().charAt(pos) == '('){
-                        paren += "(";
+                    in = getChar(pos);
+                    if (in == '('){
+                        ret += "(";
                         parenpos++;
                     }
-                    else if (input.toString().charAt(pos) == ')'){
-                        paren += ")";
+                    else if (in == ')'){
+                        ret += ")";
                         parenpos--;
                     }
                     else{
-                        paren += input.toString().charAt(pos);
+                        ret += in;
+
                     }
                     pos++;
                 }
-                varList.add(paren);
-                paren = "";
+                varList.add(ret);
+                ret = "";
             }
             else{
-                if (input.toString().charAt(pos) == ' '){
+                if (in == ' '){
                     pos++;
                 }
                 else{
-                    varList.add(input.toString().substring(pos, pos+1));
+                    if (pos+1 != input.toString().length() && getChar(pos+1) != ' '){
+                        ret += getChar(pos);
+                    }
+                    else{
+                        varList.add(ret + input.toString().substring(pos, pos+1));
+                        ret = "";
+                    }
                     pos++;
                 }
             }

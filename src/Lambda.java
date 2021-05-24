@@ -18,7 +18,7 @@ public class Lambda {
             if (pos >= 0) {
                 input = input.substring(0, pos).trim();
             }
-            Expression expr = new Expression(input);
+            Variable expr = new Variable(input);
             if(input.length() == 1) {
                 System.out.println(input);
             }

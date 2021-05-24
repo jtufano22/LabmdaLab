@@ -1,15 +1,4 @@
-import java.util.ArrayList;
+interface Expression{
 
-public class Expression {
-    public String expr;
-
-    public Expression(){};
-
-    public Expression(String expr){
-        this.expr = expr;
-    }
-
-    public String toString() {
-        return expr;
-    }
+    String toString();
 }
