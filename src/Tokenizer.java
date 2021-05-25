@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Tokenizer {
 
@@ -35,7 +36,6 @@ public class Tokenizer {
         return -1;
     }
 
-
     public Function makeFunction(int pos2) {
         String in = input.toString();
         Tokenizer t = new Tokenizer(new Variable(in.substring(in.indexOf(".")+1)));
@@ -66,12 +66,22 @@ public class Tokenizer {
         return null;
     }
 
+    public Expression extraneousParen(Expression in){
+        String inStr = in.toString();
+        if (inStr.charAt(0) == '(' && inStr.charAt(inStr.length()-1) == ')'){
+            return extraneousParen(new Variable(inStr.substring(1, inStr.length() - 1)));
+        }
+        else{
+            return in;
+        }
+    }
 
     public ArrayList<String> tokens(){
         ArrayList<String> varList = new ArrayList<>();
         char in;
         String ret = "";
         int parenpos = 0;
+        input = extraneousParen(input);
         while (pos < input.toString().length() && pos >= 0){
             in = getChar(pos);
             if (in == '('){
@@ -124,6 +134,7 @@ public class Tokenizer {
                 }
             }
         }
+        System.out.println(varList);
         return varList;
     }
 }
