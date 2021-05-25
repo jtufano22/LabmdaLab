@@ -6,8 +6,6 @@ public class Application implements Expression{
         this.leftExp = leftExp;
         this.rightExp = rightExp;
     }
-
-
     public String toString(){
         return "(" + leftExp+ " " + rightExp + ")";
     }
