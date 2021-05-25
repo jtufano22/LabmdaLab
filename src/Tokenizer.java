@@ -13,8 +13,12 @@ public class Tokenizer {
         return input.toString().charAt(pos);
     }
 
+
     public int getCloseParenPos(int pos2, String in, ArrayList<String> parens){
-        if (in.charAt(pos2) == ')' && parens.size() == 0) {
+        if(pos2 >= in.length()) {
+            return -1;
+        }
+        else if (in.charAt(pos2) == ')' && parens.size() == 1) {
             return pos2;
         }
         else if (in.charAt(pos2) == '(') {
@@ -26,22 +30,27 @@ public class Tokenizer {
             parens.remove(parens.size()-1);
             getCloseParenPos(++pos2, in, parens);
         }
+        else
+            getCloseParenPos(++pos2, in, parens);
         return -1;
     }
 
+
     public Function makeFunction(int pos2) {
         String in = input.toString();
+        Tokenizer t = new Tokenizer(new Variable(in.substring(in.indexOf(".")+1)));
+        Variable v = new Variable(new Lexer(t.tokens()).lexed().toString());
 
         //92 is backslash
         if (getChar(pos2) == '(') {
             pos += getCloseParenPos(0, in.substring(pos), new ArrayList<String>());
             if(getChar(pos2+1) == 'λ') {
             return new Function(new Variable(in.substring(in.indexOf("λ")+1, in.indexOf(".")).trim()),
-                    new Variable(in.substring(in.indexOf(".")+1).trim()));
+                    v);
             }
             else if(getChar(pos2+1) == 92) {
                 return new Function(new Variable(in.substring(in.indexOf(92)+1, in.indexOf(".")).trim()),
-                        new Variable(in.substring(in.indexOf(".")+1).trim()));
+                        v);
             }
         }
         else if(getChar(pos2) == 'λ' || getChar(pos2) == 92) {
@@ -52,23 +61,24 @@ public class Tokenizer {
                 pos += getCloseParenPos(0, in.substring(pos), new ArrayList<String>());
             }
             return new Function(new Variable(in.substring(pos2+1, in.indexOf(".")).trim()),
-                    new Variable(in.substring(in.indexOf(".")+1).trim()));
+                    v);
         }
         return null;
     }
+
 
     public ArrayList<String> tokens(){
         ArrayList<String> varList = new ArrayList<>();
         char in;
         String ret = "";
         int parenpos = 0;
-        while (pos != input.toString().length()){
+        while (pos < input.toString().length() && pos >= 0){
             in = getChar(pos);
             if (in == '('){
                 // 92 is ASCII value for backslash
                 if (getChar(pos+1) == 92 || getChar(pos+1) == 'λ') {
                     varList.add(makeFunction(pos).toString());
-                    //need to do sum stuff w pos here
+                    continue;
                 }
                 ret += "(";
                 pos++;
@@ -107,7 +117,7 @@ public class Tokenizer {
                         ret += getChar(pos);
                     }
                     else{
-                        varList.add(ret + input.toString().substring(pos, pos+1));
+                        varList.add(ret + getChar(pos));
                         ret = "";
                     }
                     pos++;

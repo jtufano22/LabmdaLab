@@ -24,7 +24,6 @@ public class Lambda {
             }
             else {
                 Tokenizer t = new Tokenizer(expr);
-                System.out.println("Tokens: " + t.tokens());
                 Lexer l = new Lexer(t.tokens());
                 System.out.println(l.lexed());
             }

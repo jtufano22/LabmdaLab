@@ -1,6 +1,6 @@
 public class Variable implements Expression{
-    private String name;
-    private String value;
+    public String name;
+    public String value;
 
     public Variable(String name, String value) {
         super();
