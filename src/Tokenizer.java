@@ -135,7 +135,6 @@ public class Tokenizer {
                 }
             }
         }
-        System.out.println(varList);
         return varList;
     }
 }
