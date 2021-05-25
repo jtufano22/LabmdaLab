@@ -37,6 +37,7 @@ public class Tokenizer {
 
 
     public Function makeFunction(int pos2) {
+        // in.indexOf(".") when defining Tokenizer t includes a close paren already. This is the extra one
         String in = input.toString();
         Tokenizer t = new Tokenizer(new Variable(in.substring(in.indexOf(".")+1)));
         Variable v = new Variable(new Lexer(t.tokens()).lexed().toString());
