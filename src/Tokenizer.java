@@ -42,6 +42,12 @@ public class Tokenizer {
         Tokenizer t = new Tokenizer(new Variable(in.substring(in.indexOf(".")+1)));
         Variable v = new Variable(new Lexer(t.tokens()).lexed().toString());
 
+
+        if (pos2-1 > 0 && pos2 + 4 < in.length() && in.charAt(pos-1) == '(' && in.charAt(pos+ 4) == ')'){
+            pos+=4;
+            return new Function(new Variable(in.substring(pos2+1, pos2+4)), v);
+        }
+
         //92 is backslash
         if (getChar(pos2) == '(') {
             pos += getCloseParenPos(0, in.substring(pos), new ArrayList<String>());
@@ -54,7 +60,8 @@ public class Tokenizer {
                         v);
             }
         }
-        else if(getChar(pos2) == 'λ' || getChar(pos2) == 92) {
+         if(getChar(pos2) == 'λ' || getChar(pos2) == 92) {
+
             if (getCloseParenPos(0, in.substring(pos), new ArrayList<String>()) < 0) {
                 pos += in.length();
             }
@@ -86,7 +93,6 @@ public class Tokenizer {
         while (pos < input.toString().length() && pos >= 0){
             in = getChar(pos);
             if (in == '('){
-                // 92 is ASCII value for backslash
                 if (getChar(pos+1) == 92 || getChar(pos+1) == 'λ') {
                     varList.add(makeFunction(pos).toString());
                     continue;
@@ -113,12 +119,9 @@ public class Tokenizer {
                 varList.add(ret);
                 ret = "";
             }
-
-            //92 is backslash
             else if (in == 92 || in == 'λ') {
                 varList.add(makeFunction(pos).toString());
             }
-
             else{
                 if (in == ' '){
                     pos++;
@@ -135,6 +138,7 @@ public class Tokenizer {
                 }
             }
         }
+        System.out.println(varList);
         return varList;
     }
 }

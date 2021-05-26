@@ -17,6 +17,11 @@ public class Lambda {
             int pos = input.indexOf(';');
             if (pos >= 0) {
                 input = input.substring(0, pos).trim();
+                if (input.equals("")){
+                    System.out.print(">");
+                    input = in.nextLine();
+                    continue;
+                }
             }
             Variable expr = new Variable(input);
             if(input.length() == 1) {
