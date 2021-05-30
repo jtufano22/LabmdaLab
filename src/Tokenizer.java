@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Stack;
 
 public class Tokenizer {
 
@@ -15,42 +16,48 @@ public class Tokenizer {
     }
 
 
-    public int getCloseParenPos(int pos2, String in, ArrayList<String> parens){
-        if(pos2 >= in.length()) {
+    public int getCloseParenPos(int pos, String in, Stack<String> parens){
+        //System.out.println("Pos: " + pos + "; In: " + in + "; Parens: " + parens);
+        if(pos >= in.length()) {
             return -1;
         }
-        else if (in.charAt(pos2) == ')' && parens.size() == 1) {
-            return pos2;
+        else if (in.charAt(pos) == ')' && parens.size() == 1) {
+            return pos;
         }
-        else if (in.charAt(pos2) == '(') {
-            parens.add("(");
-            getCloseParenPos(++pos2, in, parens);
+        else if (in.charAt(pos) == '(') {
+            parens.push("(");
+            return getCloseParenPos(++pos, in, parens);
         }
 
-        else if (in.charAt(pos2) == ')') {
-            parens.remove(parens.size()-1);
-            getCloseParenPos(++pos2, in, parens);
+        else if (in.charAt(pos) == ')') {
+            parens.pop();
+            return getCloseParenPos(++pos, in, parens);
         }
         else
-            getCloseParenPos(++pos2, in, parens);
-        return -1;
+            return getCloseParenPos(++pos, in, parens);
     }
 
     public Function makeFunction(int pos2) {
         // in.indexOf(".") when defining Tokenizer t includes a close paren already. This is the extra one
         String in = input.toString();
-        Tokenizer t = new Tokenizer(new Variable(in.substring(in.indexOf(".")+1)));
+        int cPP = getCloseParenPos(0, in.substring(pos2), new Stack<String>());
+        Tokenizer t;
+        if(cPP < 0) {
+            t = new Tokenizer(new Variable(in.substring(in.indexOf(".")+1)));
+        }
+        else
+            t = new Tokenizer(new Variable(in.substring(in.indexOf(".")+1, cPP)));
         Variable v = new Variable(new Lexer(t.tokens()).lexed().toString());
 
 
-        if (pos2-1 > 0 && pos2 + 4 < in.length() && in.charAt(pos-1) == '(' && in.charAt(pos+ 4) == ')'){
-            pos+=4;
-            return new Function(new Variable(in.substring(pos2+1, pos2+4)), v);
-        }
+        //if (pos2-1 > 0 && pos2 + 4 < in.length() && in.charAt(pos-1) == '(' && in.charAt(pos+ 4) == ')'){
+        //    pos+=4;
+        //    return new Function(new Variable(in.substring(pos2+1, pos2+4)), v);
+        //}
 
         //92 is backslash
         if (getChar(pos2) == '(') {
-            pos += getCloseParenPos(0, in.substring(pos), new ArrayList<String>());
+            pos += cPP+1;
             if(getChar(pos2+1) == 'λ') {
             return new Function(new Variable(in.substring(in.indexOf("λ")+1, in.indexOf(".")).trim()),
                     v);
@@ -62,11 +69,11 @@ public class Tokenizer {
         }
          if(getChar(pos2) == 'λ' || getChar(pos2) == 92) {
 
-            if (getCloseParenPos(0, in.substring(pos), new ArrayList<String>()) < 0) {
+            if (cPP < 0) {
                 pos += in.length();
             }
             else {
-                pos += getCloseParenPos(0, in.substring(pos), new ArrayList<String>());
+                pos += cPP + 1;
             }
             return new Function(new Variable(in.substring(pos2+1, in.indexOf(".")).trim()),
                     v);
@@ -138,7 +145,6 @@ public class Tokenizer {
                 }
             }
         }
-        System.out.println(varList);
         return varList;
     }
 }

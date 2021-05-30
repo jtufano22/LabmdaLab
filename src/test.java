@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class test {
     public static void main(String[] args) {
 
-    char c = 92;
-        System.out.println(c);
+        String s = "0123456789";
+        System.out.println(s.substring(2, -1));
     }
 }
