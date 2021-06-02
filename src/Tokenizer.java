@@ -40,23 +40,22 @@ public class Tokenizer {
     public Function makeFunction(int pos2) {
         // in.indexOf(".") when defining Tokenizer t includes a close paren already. This is the extra one
         String in = input.toString();
+        String current = in.substring(pos2);
         int cPP = getCloseParenPos(0, in.substring(pos2), new Stack<String>());
         Tokenizer t;
 
         //92 is backslash
         if (getChar(pos2) == '(') {
-            System.out.println(cPP);
-            System.out.println(in.substring(pos2));
-            t = new Tokenizer(new Variable(in.substring(pos2).substring(in.substring(pos2).indexOf(".") + 1, cPP)));
+            t = new Tokenizer(new Variable(current.substring(current.indexOf(".") + 1, cPP)));
             Variable v = new Variable(new Lexer(t.tokens()).lexed().toString());
             System.out.println(v);
 
             pos += cPP + 1;
             if (getChar(pos2 + 1) == 'λ') {
-                return new Function(new Variable(in.substring(pos2).substring(in.indexOf("λ") + 1, in.indexOf(".")).trim()),
+                return new Function(new Variable(current.substring(in.indexOf("λ") + 1, in.indexOf(".")).trim()),
                         v);
             } else if (getChar(pos2 + 1) == 92) {
-                return new Function(new Variable(in.substring(pos2).substring(in.indexOf(92) + 1, in.indexOf(".")).trim()),
+                return new Function(new Variable(current.substring(in.indexOf(92) + 1, in.indexOf(".")).trim()),
                         v);
             }
         }
@@ -66,20 +65,38 @@ public class Tokenizer {
 
              pos += in.length();
 
-             return new Function(new Variable(in.substring(pos2 + 1, in.indexOf(".")).trim()),
+             return new Function(new Variable(current.substring(1, in.indexOf(".")).trim()),
                      v);
          }
         return null;
     }
 
-    public Expression extraneousParen(Expression in){
-        String inStr = in.toString();
-        if (inStr.charAt(0) == '(' && inStr.charAt(inStr.length()-1) == ')'){
-            return extraneousParen(new Variable(inStr.substring(1, inStr.length() - 1)));
+    public Expression extraneousParen(Expression input, int pos2) {
+        String in = input.toString();
+        int i = in.indexOf('(');
+        int splitPos = 0;
+        int innerLen = 0;
+        int depth = 0;
+        while (i < in.length()) {
+            while (i != in.length() && getChar(i) != ' ') {
+                if (in.charAt(i) == '(') {
+                    int nextOpen = in.substring(i+1).indexOf('(');
+                    if (nextOpen == -1 || nextOpen > in.substring(i+1).indexOf(')')){
+                        splitPos = i+1;
+                    }
+                    depth++;
+                } else if (getChar(i) == ')') {
+                    depth--;
+                } else {
+                    innerLen++;
+                }
+                i++;
+            }
+            if (depth <= 1) {
+                return extraneousParen(new Variable(in.substring(0, pos2) + in.substring(splitPos, splitPos + innerLen) + in.substring(i)), pos2 + innerLen);
+            }
         }
-        else{
-            return in;
-        }
+        return new Variable(in);
     }
 
     public ArrayList<String> tokens(){
@@ -87,7 +104,7 @@ public class Tokenizer {
         char in;
         String ret = "";
         int parenpos = 0;
-        input = extraneousParen(input);
+        input = extraneousParen(input, 0);
         while (pos < input.toString().length() && pos >= 0){
             in = getChar(pos);
             if (in == '('){
