@@ -42,42 +42,33 @@ public class Tokenizer {
         String in = input.toString();
         int cPP = getCloseParenPos(0, in.substring(pos2), new Stack<String>());
         Tokenizer t;
-        if(cPP < 0) {
-            t = new Tokenizer(new Variable(in.substring(in.indexOf(".")+1)));
-        }
-        else
-            t = new Tokenizer(new Variable(in.substring(in.indexOf(".")+1, cPP)));
-        Variable v = new Variable(new Lexer(t.tokens()).lexed().toString());
-
-
-        //if (pos2-1 > 0 && pos2 + 4 < in.length() && in.charAt(pos-1) == '(' && in.charAt(pos+ 4) == ')'){
-        //    pos+=4;
-        //    return new Function(new Variable(in.substring(pos2+1, pos2+4)), v);
-        //}
 
         //92 is backslash
         if (getChar(pos2) == '(') {
-            pos += cPP+1;
-            if(getChar(pos2+1) == 'λ') {
-            return new Function(new Variable(in.substring(in.indexOf("λ")+1, in.indexOf(".")).trim()),
-                    v);
-            }
-            else if(getChar(pos2+1) == 92) {
-                return new Function(new Variable(in.substring(in.indexOf(92)+1, in.indexOf(".")).trim()),
+            System.out.println(cPP);
+            System.out.println(in.substring(pos2));
+            t = new Tokenizer(new Variable(in.substring(pos2).substring(in.substring(pos2).indexOf(".") + 1, cPP)));
+            Variable v = new Variable(new Lexer(t.tokens()).lexed().toString());
+            System.out.println(v);
+
+            pos += cPP + 1;
+            if (getChar(pos2 + 1) == 'λ') {
+                return new Function(new Variable(in.substring(pos2).substring(in.indexOf("λ") + 1, in.indexOf(".")).trim()),
+                        v);
+            } else if (getChar(pos2 + 1) == 92) {
+                return new Function(new Variable(in.substring(pos2).substring(in.indexOf(92) + 1, in.indexOf(".")).trim()),
                         v);
             }
         }
          if(getChar(pos2) == 'λ' || getChar(pos2) == 92) {
+             t = new Tokenizer(new Variable(in.substring(in.indexOf(".") + 1)));
+             Variable v = new Variable(new Lexer(t.tokens()).lexed().toString());
 
-            if (cPP < 0) {
-                pos += in.length();
-            }
-            else {
-                pos += cPP + 1;
-            }
-            return new Function(new Variable(in.substring(pos2+1, in.indexOf(".")).trim()),
-                    v);
-        }
+             pos += in.length();
+
+             return new Function(new Variable(in.substring(pos2 + 1, in.indexOf(".")).trim()),
+                     v);
+         }
         return null;
     }
 
