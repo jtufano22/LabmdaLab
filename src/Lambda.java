@@ -1,11 +1,11 @@
 // import sun.tools.jstat.Token;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class Lambda {
 
     public static String input;
+    public static HashMap<String, Expression> dictionary = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -23,14 +23,28 @@ public class Lambda {
                     continue;
                 }
             }
-            Variable expr = new Variable(input);
             if(input.length() == 1) {
                 System.out.println(input);
             }
             else {
-                Tokenizer t = new Tokenizer(expr);
-                Lexer l = new Lexer(t.tokens());
-                System.out.println(l.lexed());
+                if (input.contains("=")){
+                    String varName = input.substring(0, input.indexOf(" "));
+                    if (dictionary.get(varName) != null){
+                        System.out.print(varName + " is already defined\n>");
+                        input = in.nextLine();
+                        continue;
+                    }
+                    Tokenizer t = new Tokenizer(new Variable(input.substring(input.indexOf("=")+1)));
+                    Lexer l = new Lexer(t.tokens());
+                    Expression e = l.lexed();
+                    dictionary.put(varName, e);
+                    System.out.println("Added " + e.toString() + " as " + input.substring(0, input.indexOf(" ")));
+                }
+                else{
+                    Tokenizer t = new Tokenizer(new Variable(input));
+                    Lexer l = new Lexer(t.tokens());
+                    System.out.println(l.lexed());
+                }
             }
             System.out.print(">");
             input = in.nextLine();

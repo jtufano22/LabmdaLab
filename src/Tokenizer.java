@@ -1,11 +1,10 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Stack;
+import java.util.*;
 
-public class Tokenizer {
+public class Tokenizer extends Lambda{
 
-    private Expression input;
-    private int pos = 0;
+    private static Expression input;
+    private static int pos = 0;
+    private static Set<String> keys = dictionary.keySet();
 
     public Tokenizer (Expression input){
         this.input = input;
@@ -13,6 +12,19 @@ public class Tokenizer {
 
     public char getChar(int pos){
         return input.toString().charAt(pos);
+    }
+
+    public static String isVar(){
+        String in = input.toString().trim();
+        if (input.toString().contains(" ")){
+            in = input.toString().substring(pos).substring(0, input.toString().indexOf(" "));
+        }
+        for(int i = 0; i < keys.size(); i++){
+            if (keys.contains(in)){
+                return in;
+            }
+        }
+        return null;
     }
 
     public int getCloseParenPos(int pos, String in, Stack<String> parens){
@@ -36,21 +48,29 @@ public class Tokenizer {
             return getCloseParenPos(++pos, in, parens);
     }
 
-    public ArrayList<String> smartSplit(String in, ArrayList<String> tokens) {
+    public ArrayList<String> smartSplit(String in, ArrayList<String> tokens, String var) {
         int close;
-        char inChar = in.charAt(0);
+        char inChar = in.charAt(0); //try statement used if the substring goes out of bounds, it was the easiest idea i thought of lol
         try {
             if (inChar == '(') {
                 close = getCloseParenPos(0, in, new Stack<>()) + 1;
                 tokens.add(in.substring(0, close));
-                return smartSplit(in.substring(close), tokens);
+                return smartSplit(in.substring(close), tokens, var);
             } else if (inChar == ' ') {
-                return smartSplit(in.substring(1), tokens);
+                var = "";
+                return smartSplit(in.substring(1), tokens, var);
             } else {
-                tokens.add(in.substring(0, 1));
-                return smartSplit(in.substring(1), tokens);
+                var += inChar;
+                if (in.length() > 1 && in.charAt(1) == ' '){
+                    tokens.add(var);
+                    return smartSplit(in.substring(1), tokens, var);
+                }
+                return smartSplit(in.substring(1), tokens, var);
             }
         } catch (Exception StringIndexOutOfBoundsException) {
+            if (!var.equals("")){
+                tokens.add(var);
+            }
             return tokens;
         }
     }
@@ -66,7 +86,6 @@ public class Tokenizer {
         if (getChar(pos2) == '(') {
             t = new Tokenizer(new Variable(current.substring(current.indexOf(".") + 1, cPP)));
             Variable v = new Variable(new Lexer(t.tokens()).lexed().toString());
-            System.out.println(v);
 
             pos += cPP + 1;
             if (getChar(pos2 + 1) == 'λ') {
@@ -78,7 +97,7 @@ public class Tokenizer {
             }
         }
          if(getChar(pos2) == 'λ' || getChar(pos2) == 92) {
-             t = new Tokenizer(new Variable(in.substring(in.indexOf(".") + 1)));
+             t = new Tokenizer(new Variable(in.substring(in.indexOf(".")+1)));
              Variable v = new Variable(new Lexer(t.tokens()).lexed().toString());
 
              pos += in.length();
@@ -90,11 +109,11 @@ public class Tokenizer {
     }
 
     public Expression extraneousParen(Expression input) {
-        ArrayList<String> tokens = smartSplit(input.toString(), new ArrayList<>());
+        ArrayList<String> tokens = smartSplit(input.toString(), new ArrayList<>(), "");
         int pos2;
         for (int i = 0; i < tokens.size(); i++) {
             pos2 = 0;
-            String token = tokens.get(i);
+            String token = tokens.get(i); //might revise I did this when I was super tired
             while (token.charAt(pos2) == '(') {
                 if (tokens.get(i).charAt(token.length() - 1) == ')') {
                     if (token.charAt(pos2 + 1) == 92) {
@@ -105,10 +124,11 @@ public class Tokenizer {
                         tokens.set(i, tokens.get(i).substring(pos2 + 1, token.length() - pos2 - 1));
                         break;
                     }
-                    pos2 += 1;
+                    pos2++;
                 }
             }
         }
+
         String fixedInput = "";
         for(int i = 0; i < tokens.size(); i++){
             if (i+1 == tokens.size()){
@@ -130,8 +150,15 @@ public class Tokenizer {
         char in;
         String ret = "";
         int parenpos = 0;
-        input = extraneousParen(input);
+        input = new Variable(extraneousParen(input).toString().trim());
         while (pos < input.toString().length() && pos >= 0){
+            if (isVar() != null){
+                varList.add(dictionary.get(isVar()).toString());
+                if (input.toString().contains(" ")){
+                    //issue is concerning this if statmenet and the isVar() functioon
+                }
+                continue;
+            }
             in = getChar(pos);
             if (in == '('){
                 if (getChar(pos+1) == 92 || getChar(pos+1) == 'λ') {
