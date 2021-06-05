@@ -15,7 +15,6 @@ public class Tokenizer {
         return input.toString().charAt(pos);
     }
 
-
     public int getCloseParenPos(int pos, String in, Stack<String> parens){
         //System.out.println("Pos: " + pos + "; In: " + in + "; Parens: " + parens);
         if(pos >= in.length()) {
@@ -35,6 +34,25 @@ public class Tokenizer {
         }
         else
             return getCloseParenPos(++pos, in, parens);
+    }
+
+    public ArrayList<String> smartSplit(String in, ArrayList<String> tokens) {
+        int close;
+        char inChar = in.charAt(0);
+        try {
+            if (inChar == '(') {
+                close = getCloseParenPos(0, in, new Stack<>()) + 1;
+                tokens.add(in.substring(0, close));
+                return smartSplit(in.substring(close), tokens);
+            } else if (inChar == ' ') {
+                return smartSplit(in.substring(1), tokens);
+            } else {
+                tokens.add(in.substring(0, 1));
+                return smartSplit(in.substring(1), tokens);
+            }
+        } catch (Exception StringIndexOutOfBoundsException) {
+            return tokens;
+        }
     }
 
     public Function makeFunction(int pos2) {
@@ -71,32 +89,40 @@ public class Tokenizer {
         return null;
     }
 
-    public Expression extraneousParen(Expression input, int pos2) {
-        String in = input.toString();
-        int i = in.indexOf('(');
-        int splitPos = 0;
-        int innerLen = 0;
-        int depth = 0;
-        while (i < in.length()) {
-            while (i != in.length() && getChar(i) != ' ') {
-                if (in.charAt(i) == '(') {
-                    int nextOpen = in.substring(i+1).indexOf('(');
-                    if (nextOpen == -1 || nextOpen > in.substring(i+1).indexOf(')')){
-                        splitPos = i+1;
+    public Expression extraneousParen(Expression input) {
+        ArrayList<String> tokens = smartSplit(input.toString(), new ArrayList<>());
+        int pos2;
+        for (int i = 0; i < tokens.size(); i++) {
+            pos2 = 0;
+            String token = tokens.get(i);
+            while (token.charAt(pos2) == '(') {
+                if (tokens.get(i).charAt(token.length() - 1) == ')') {
+                    if (token.charAt(pos2 + 1) == 92) {
+                        tokens.set(i, tokens.get(i).substring(pos2, token.length() - pos2));
+                        break;
                     }
-                    depth++;
-                } else if (getChar(i) == ')') {
-                    depth--;
-                } else {
-                    innerLen++;
+                    else if (token.charAt(pos2 + 1) != '(' && token.charAt(pos2 + 1) != ')'){
+                        tokens.set(i, tokens.get(i).substring(pos2 + 1, token.length() - pos2 - 1));
+                        break;
+                    }
+                    pos2 += 1;
                 }
-                i++;
-            }
-            if (depth <= 1) {
-                return extraneousParen(new Variable(in.substring(0, pos2) + in.substring(splitPos, splitPos + innerLen) + in.substring(i)), pos2 + innerLen);
             }
         }
-        return new Variable(in);
+        String fixedInput = "";
+        for(int i = 0; i < tokens.size(); i++){
+            if (i+1 == tokens.size()){
+                return new Variable(fixedInput + " " + tokens.get(i));
+            }
+            else if (i == 0){
+                fixedInput += tokens.get(i);
+            }
+            else{
+                fixedInput += " " + tokens.get(i);
+            }
+        }
+
+        return null;
     }
 
     public ArrayList<String> tokens(){
@@ -104,7 +130,7 @@ public class Tokenizer {
         char in;
         String ret = "";
         int parenpos = 0;
-        input = extraneousParen(input, 0);
+        input = extraneousParen(input);
         while (pos < input.toString().length() && pos >= 0){
             in = getChar(pos);
             if (in == '('){
