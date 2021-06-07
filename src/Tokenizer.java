@@ -112,18 +112,21 @@ public class Tokenizer extends Lambda{
         int pos2;
         for (int i = 0; i < tokens.size(); i++) {
             pos2 = 0;
-            String token = tokens.get(i); //might revise I did this when I was super tired
-            while (token.charAt(pos2) == '(') {
-                if (tokens.get(i).charAt(token.length() - 1) == ')') {
-                    if (token.charAt(pos2 + 1) == 92) {
-                        tokens.set(i, tokens.get(i).substring(pos2, token.length() - pos2));
-                        break;
+            String token = tokens.get(i);
+            while (getCloseParenPos(0, token, new Stack<>()) == token.length() - 1){
+                token = tokens.get(i);
+                if (token.charAt(pos2 + 1) == '(' && getCloseParenPos(1, token, new Stack<>()) == token.length() - 2){
+                    tokens.set(i, token.substring(1, token.length()-1));
+                }
+                else if (token.charAt(pos2 + 1) == 92){
+                    tokens.set(i, token);
+                    break;
+                }
+                else{
+                    if (token.substring(token.indexOf("(")+1, token.indexOf(")")).length() == 1){
+                        tokens.set(i, String.valueOf(token.charAt(1)));
                     }
-                    else if (token.charAt(pos2 + 1) != '(' && token.charAt(pos2 + 1) != ')'){
-                        tokens.set(i, tokens.get(i).substring(pos2 + 1, token.length() - pos2 - 1));
-                        break;
-                    }
-                    pos2++;
+                    break;
                 }
             }
         }
@@ -152,6 +155,7 @@ public class Tokenizer extends Lambda{
         int parenpos = 0;
         input = new Variable(extraneousParen(input).toString().trim());
         while (pos < input.toString().length() && pos >= 0){
+
             dictVaule = isVar(input.toString().substring(pos)); // if the dictionary contains the next token, dictValue becomes equal to it
             if (dictVaule != null){
                 varList.add(dictionary.get(dictVaule).toString());
@@ -206,6 +210,7 @@ public class Tokenizer extends Lambda{
             }
         }
         pos = 0;
+        System.out.println(varList);
         return varList;
     }
 }
