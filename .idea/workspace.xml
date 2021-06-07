@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2bb77ff-46e3-4e42-a2b7-d3b9f0dccae2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lambda/Lambda.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lambda/Lambda.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lambda/Tokenizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lambda/Tokenizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Lambda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lambda.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tokenizer.java" afterDir="false" />
-    </list>
+    <list default="true" id="a2bb77ff-46e3-4e42-a2b7-d3b9f0dccae2" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +27,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Lambda.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="387">
@@ -42,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Tokenizer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="122" column="26" lean-forward="true" selection-start-line="122" selection-start-column="26" selection-end-line="122" selection-end-column="26" />
+            <state relative-caret-position="195">
+              <caret line="13" column="44" lean-forward="true" selection-start-line="13" selection-start-column="44" selection-end-line="13" selection-end-column="44" />
               <folding>
                 <element signature="e#199#200#0" expanded="true" />
                 <element signature="e#233#234#0" expanded="true" />
@@ -143,8 +137,8 @@
       <find>System.</find>
       <find>input =</find>
       <find>expr</find>
-      <find>System.ou</find>
       <find>System</find>
+      <find>System.ou</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -301,7 +295,7 @@
       <workItem from="1621960756812" duration="1260000" />
       <workItem from="1622410841320" duration="2758000" />
       <workItem from="1622569160516" duration="3800000" />
-      <workItem from="1622852269360" duration="22599000" />
+      <workItem from="1622852269360" duration="23206000" />
     </task>
     <task id="LOCAL-00001" summary="wee wee">
       <created>1620668550228</created>
@@ -422,16 +416,23 @@
       <option name="project" value="LOCAL" />
       <updated>1623080295827</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="milestone 8 ish maybe">
+      <created>1623081006063</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1623081006063</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50992000" />
+    <option name="totallyTimeSpent" value="51599000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="780" height="794" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.7506775" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3962804" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -440,7 +441,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5406504" visible="true" weight="0.32327586" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.54077256" visible="true" weight="0.27108434" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.79327613" weight="0.34698796" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -448,7 +449,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49928468" weight="0.32867134" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.4593496" side_tool="true" visible="true" weight="0.32327586" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.45922747" side_tool="true" visible="true" weight="0.27108434" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.26895565" weight="0.33373493" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -622,23 +623,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Lambda.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="41" column="13" lean-forward="true" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Tokenizer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="122" column="26" lean-forward="true" selection-start-line="122" selection-start-column="26" selection-end-line="122" selection-end-column="26" />
+        <state relative-caret-position="195">
+          <caret line="13" column="44" lean-forward="true" selection-start-line="13" selection-start-column="44" selection-end-line="13" selection-end-column="44" />
           <folding>
             <element signature="e#199#200#0" expanded="true" />
             <element signature="e#233#234#0" expanded="true" />
             <element signature="e#268#269#0" expanded="true" />
             <element signature="e#319#320#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Lambda.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="41" column="13" lean-forward="true" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
         </state>
       </provider>
     </entry>
