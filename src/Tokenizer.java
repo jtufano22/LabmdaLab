@@ -3,7 +3,7 @@ import java.util.*;
 public class Tokenizer extends Lambda{
 
     private Expression input;
-    private static int pos = 0;
+    private int pos = 0;
     private static Set<String> keys = dictionary.keySet();
 
     public Tokenizer (Expression input){
@@ -49,7 +49,8 @@ public class Tokenizer extends Lambda{
 
     public ArrayList<String> smartSplit(String in, ArrayList<String> tokens, String var) {
         int close;
-        char inChar = in.charAt(0); //try statement used if the substring goes out of bounds, it was the easiest idea i thought of lol
+        char inChar = in.charAt(0);
+        //try statement used if the substring goes out of bounds, it was the easiest idea i thought of lol
         try {
             if (inChar == '(') {
                 close = getCloseParenPos(0, in, new Stack<>()) + 1;
@@ -78,31 +79,30 @@ public class Tokenizer extends Lambda{
         // in.indexOf(".") when defining Tokenizer t includes a close paren already. This is the extra one
         String in = input.toString();
         String current = in.substring(pos2);
-        int cPP = getCloseParenPos(0, in.substring(pos2), new Stack<String>());
+        int cPP = getCloseParenPos(0, current, new Stack<String>());
         Tokenizer t;
 
         //92 is backslash
         if (getChar(pos2) == '(') {
             t = new Tokenizer(new Variable(current.substring(current.indexOf(".") + 1, cPP)));
-            Variable v = new Variable(new Lexer(t.tokens()).lexed().toString());
+            Variable expr = new Variable(new Lexer(t.tokens()).lexed().toString());
 
             pos += cPP + 1;
             if (getChar(pos2 + 1) == 'λ') {
-                return new Function(new Variable(current.substring(in.indexOf("λ") + 1, in.indexOf(".")).trim()),
-                        v);
+                return new Function(new Variable(current.substring(current.indexOf("λ") + 1, current.indexOf(".")).trim()),
+                        expr);
             } else if (getChar(pos2 + 1) == 92) {
-                return new Function(new Variable(current.substring(in.indexOf(92) + 1, in.indexOf(".")).trim()),
-                        v);
+                return new Function(new Variable(current.substring(current.indexOf(92) + 1, current.indexOf(".")).trim()),
+                        expr);
             }
         }
          if(getChar(pos2) == 'λ' || getChar(pos2) == 92) {
-             t = new Tokenizer(new Variable(in.substring(in.indexOf(".")+1)));
-             Variable v = new Variable(new Lexer(t.tokens()).lexed().toString());
+             t = new Tokenizer(new Variable(current.substring(current.indexOf(".")+1)));
+             Variable expr = new Variable(new Lexer(t.tokens()).lexed().toString());
+             pos += current.length();
 
-             pos += in.length();
-
-             return new Function(new Variable(current.substring(1, in.indexOf(".")).trim()),
-                     v);
+             return new Function(new Variable(current.substring(1, current.indexOf(".")).trim()),
+                     expr);
          }
         return null;
     }
@@ -210,7 +210,6 @@ public class Tokenizer extends Lambda{
             }
         }
         pos = 0;
-        System.out.println(varList);
         return varList;
     }
 }

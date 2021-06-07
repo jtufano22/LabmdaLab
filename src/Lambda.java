@@ -15,30 +15,42 @@ public class Lambda {
 
         while (!input.equals("exit")) {
             int pos = input.indexOf(';');
-            if (pos >= 0) {
-                input = input.substring(0, pos);
+            if (input.trim().equals("")) {
+                System.out.print(">");
+                input=in.nextLine();
+                continue;
             }
-            if (input.contains("=")){
-                String varName = input.substring(0, input.indexOf(" "));
-                if (dictionary.get(varName) != null){
-                    System.out.print(varName + " is already defined\n>");
+            else if (pos >= 0) {
+                input = input.substring(0, pos).trim();
+                if (input.equals("")){
+                    System.out.print(">");
                     input = in.nextLine();
                     continue;
                 }
-                Tokenizer t = new Tokenizer(new Variable(input.substring(input.indexOf("=")+1)));
-                Lexer l = new Lexer(t.tokens());
-                Expression e = l.lexed();
-                dictionary.put(varName, e);
-                System.out.println(input);
-                System.out.println("Added " + e.toString() + " as " + input.substring(0, input.indexOf(" ")));
             }
-            else if (dictionary.get(input) != null){
-                System.out.println(dictionary.get(input));
-            }
-            else{
-                Tokenizer t = new Tokenizer(new Variable(input));
-                Lexer l = new Lexer(t.tokens());
-                System.out.println(l.lexed());
+            else {
+                if (input.contains("=")){
+                    String varName = input.substring(0, input.indexOf(" "));
+                    if (dictionary.get(varName) != null){
+                        System.out.print(varName + " is already defined\n>");
+                        input = in.nextLine();
+                        continue;
+                    }
+                    Tokenizer t = new Tokenizer(new Variable(input.substring(input.indexOf("=")+1)));
+                    Lexer l = new Lexer(t.tokens());
+                    Expression e = l.lexed();
+                    dictionary.put(varName, e);
+                    System.out.println(input);
+                    System.out.println("Added " + e.toString() + " as " + input.substring(0, input.indexOf(" ")));
+                }
+                else if (dictionary.get(input) != null){
+                    System.out.println(dictionary.get(input));
+                }
+                else{
+                    Tokenizer t = new Tokenizer(new Variable(input));
+                    Lexer l = new Lexer(t.tokens());
+                    System.out.println(l.lexed());
+                }
             }
             System.out.print(">");
             input = in.nextLine();
