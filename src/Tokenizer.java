@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Tokenizer extends Lambda{
 
-    private static Expression input;
+    private Expression input;
     private static int pos = 0;
     private static Set<String> keys = dictionary.keySet();
 
