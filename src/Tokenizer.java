@@ -156,7 +156,6 @@ public class Tokenizer extends Lambda{
             if (dictVaule != null){
                 varList.add(dictionary.get(dictVaule).toString());
                 pos += dictVaule.length();
-                System.out.println(varList);
                 continue;
             }
             in = getChar(pos);
