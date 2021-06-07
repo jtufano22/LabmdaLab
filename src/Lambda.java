@@ -15,7 +15,12 @@ public class Lambda {
 
         while (!input.equals("exit")) {
             int pos = input.indexOf(';');
-            if (pos >= 0) {
+            if (input.trim().equals("")) {
+                System.out.print(">");
+                input=in.nextLine();
+                continue;
+            }
+            else if (pos >= 0) {
                 input = input.substring(0, pos).trim();
                 if (input.equals("")){
                     System.out.print(">");

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2bb77ff-46e3-4e42-a2b7-d3b9f0dccae2" name="Default Changelist" comment="milestone 8 ish maybe">
+    <list default="true" id="a2bb77ff-46e3-4e42-a2b7-d3b9f0dccae2" name="Default Changelist" comment="fixed lambdas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Lambda/Lambda.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lambda/Lambda.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Lambda/Tokenizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lambda/Tokenizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Lambda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lambda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tokenizer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +122,7 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
-  <component name="RunManager" selected="Application.Tokenizer">
+  <component name="RunManager" selected="Application.Lambda">
     <configuration name="Lambda" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Lambda" />
       <module name="Lambda" />
@@ -161,8 +164,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Tokenizer" />
         <item itemvalue="Application.Lambda" />
+        <item itemvalue="Application.Tokenizer" />
         <item itemvalue="Application.test" />
         <item itemvalue="Application.Prompt" />
       </list>
@@ -196,7 +199,7 @@
       <workItem from="1622410841320" duration="2758000" />
       <workItem from="1622569160516" duration="3800000" />
       <workItem from="1622852269360" duration="18460000" />
-      <workItem from="1623075989811" duration="1632000" />
+      <workItem from="1623075989811" duration="4256000" />
     </task>
     <task id="LOCAL-00001" summary="wee wee">
       <created>1620668550228</created>
@@ -282,7 +285,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622866671107</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="fixed lambdas">
+      <created>1623077724640</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1623077724640</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -357,7 +367,8 @@
     <MESSAGE value="prompt works with basic variables" />
     <MESSAGE value="milestone 3 done" />
     <MESSAGE value="milestone 8 ish maybe" />
-    <option name="LAST_COMMIT_MESSAGE" value="milestone 8 ish maybe" />
+    <MESSAGE value="fixed lambdas" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed lambdas" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -377,18 +388,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Tokenizer.java</url>
-          <line>78</line>
+          <line>79</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Tokenizer.java</url>
-          <line>84</line>
+          <line>85</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Tokenizer.java</url>
-          <line>89</line>
+          <line>90</line>
           <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Tokenizer.java</url>
+          <line>98</line>
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
