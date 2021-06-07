@@ -152,10 +152,10 @@ public class Tokenizer extends Lambda{
         int parenpos = 0;
         input = new Variable(extraneousParen(input).toString().trim());
         while (pos < input.toString().length() && pos >= 0){
-            dictVaule = isVar(input.toString().substring(pos));
+            dictVaule = isVar(input.toString().substring(pos)); // if the dictionary contains the next token, dictValue becomes equal to it
             if (dictVaule != null){
                 varList.add(dictionary.get(dictVaule).toString());
-                pos += dictVaule.length();
+                pos += dictVaule.length(); // pos moves past the dictionary key to the next token
                 continue;
             }
             in = getChar(pos);

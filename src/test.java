@@ -1,8 +1,10 @@
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class test {
     public static void main(String[] args) {
-        String a = "a b c";
-        System.out.println(a.substring(0, a.indexOf(" ")) + "b");
+        HashMap<String, String> hi = new HashMap<>();
+        hi.put("a", "1");
+        System.out.println(hi.get("b"));
     }
 }

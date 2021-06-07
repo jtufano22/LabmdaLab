@@ -23,9 +23,6 @@ public class Lambda {
                     continue;
                 }
             }
-            if(input.length() == 1) {
-                System.out.println(input);
-            }
             else {
                 if (input.contains("=")){
                     String varName = input.substring(0, input.indexOf(" "));
@@ -40,6 +37,9 @@ public class Lambda {
                     dictionary.put(varName, e);
                     System.out.println(input);
                     System.out.println("Added " + e.toString() + " as " + input.substring(0, input.indexOf(" ")));
+                }
+                else if (dictionary.get(input) != null){
+                    System.out.println(dictionary.get(input));
                 }
                 else{
                     Tokenizer t = new Tokenizer(new Variable(input));
