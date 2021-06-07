@@ -210,7 +210,6 @@ public class Tokenizer extends Lambda{
             }
         }
         pos = 0;
-        System.out.println(varList);
         return varList;
     }
 }
