@@ -120,6 +120,7 @@ public class Tokenizer extends Lambda{
                 }
                 else if (token.charAt(pos2 + 1) == 92){
                     tokens.set(i, token);
+                    break;
                 }
                 else{
                     if (token.substring(token.indexOf("(")+1, token.indexOf(")")).length() == 1){
@@ -154,6 +155,7 @@ public class Tokenizer extends Lambda{
         int parenpos = 0;
         input = new Variable(extraneousParen(input).toString().trim());
         while (pos < input.toString().length() && pos >= 0){
+
             dictVaule = isVar(input.toString().substring(pos)); // if the dictionary contains the next token, dictValue becomes equal to it
             if (dictVaule != null){
                 varList.add(dictionary.get(dictVaule).toString());
