@@ -14,10 +14,9 @@ public class Tokenizer extends Lambda{
         return input.toString().charAt(pos);
     }
 
-    public static String isVar(){
-        String in = input.toString().trim();
-        if (input.toString().contains(" ")){
-            in = input.toString().substring(pos).substring(0, input.toString().indexOf(" "));
+    public String isVar(String in){
+        if (in.contains(" ")){
+            in = in.substring(0, in.indexOf(" "));
         }
         for(int i = 0; i < keys.size(); i++){
             if (keys.contains(in)){
@@ -148,15 +147,16 @@ public class Tokenizer extends Lambda{
     public ArrayList<String> tokens(){
         ArrayList<String> varList = new ArrayList<>();
         char in;
+        String dictVaule;
         String ret = "";
         int parenpos = 0;
         input = new Variable(extraneousParen(input).toString().trim());
         while (pos < input.toString().length() && pos >= 0){
-            if (isVar() != null){
-                varList.add(dictionary.get(isVar()).toString());
-                if (input.toString().contains(" ")){
-                    //issue is concerning this if statmenet and the isVar() functioon
-                }
+            dictVaule = isVar(input.toString().substring(pos));
+            if (dictVaule != null){
+                varList.add(dictionary.get(dictVaule).toString());
+                pos += dictVaule.length();
+                System.out.println(varList);
                 continue;
             }
             in = getChar(pos);
@@ -206,6 +206,7 @@ public class Tokenizer extends Lambda{
                 }
             }
         }
+        pos = 0;
         return varList;
     }
 }

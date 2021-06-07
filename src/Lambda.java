@@ -38,6 +38,7 @@ public class Lambda {
                     Lexer l = new Lexer(t.tokens());
                     Expression e = l.lexed();
                     dictionary.put(varName, e);
+                    System.out.println(input);
                     System.out.println("Added " + e.toString() + " as " + input.substring(0, input.indexOf(" ")));
                 }
                 else{
