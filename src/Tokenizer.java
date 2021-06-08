@@ -155,7 +155,6 @@ public class Tokenizer extends Lambda{
         int parenpos = 0;
         input = new Variable(extraneousParen(input).toString().trim());
         while (pos < input.toString().length() && pos >= 0){
-
             dictVaule = isVar(input.toString().substring(pos)); // if the dictionary contains the next token, dictValue becomes equal to it
             if (dictVaule != null){
                 varList.add(dictionary.get(dictVaule).toString());
@@ -168,27 +167,36 @@ public class Tokenizer extends Lambda{
                     varList.add(makeFunction(pos).toString());
                     continue;
                 }
-                ret += "(";
-                pos++;
-                parenpos++;
-                while (parenpos != 0){
-                    in = getChar(pos);
-                    if (in == '('){
-                        ret += "(";
-                        parenpos++;
-                    }
-                    else if (in == ')'){
-                        ret += ")";
-                        parenpos--;
-                    }
-                    else{
-                        ret += in;
-
-                    }
-                    pos++;
+                int close = getCloseParenPos(pos, input.toString(), new Stack<>());
+                if (close + 1 == input.toString().length()){
+                    varList.add(input.toString().substring(pos));
+                    pos = close + 1;
                 }
-                varList.add(ret);
-                ret = "";
+                else {
+                    varList.add(input.toString().substring(pos, close));
+                    pos = close;
+                }
+//                ret += "(";
+//                pos++;
+//                parenpos++;
+//                while (parenpos != 0){
+//                    in = getChar(pos);
+//                    if (in == '('){
+//                        ret += "(";
+//                        parenpos++;
+//                    }
+//                    else if (in == ')'){
+//                        ret += ")";
+//                        parenpos--;
+//                    }
+//                    else{
+//                        ret += in;
+//
+//                    }
+//                    pos++;
+//                }
+//                varList.add(ret);
+//                ret = "";
             }
             else if (in == 92 || in == 'λ') {
                 varList.add(makeFunction(pos).toString());

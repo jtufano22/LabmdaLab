@@ -30,7 +30,7 @@ public class Lambda {
             }
             else {
                 if (input.contains("=")){
-                    String varName = input.substring(0, input.indexOf(" "));
+                    String varName = input.substring(0, input.indexOf("=")).trim();
                     if (dictionary.get(varName) != null){
                         System.out.print(varName + " is already defined\n>");
                         input = in.nextLine();
@@ -40,8 +40,7 @@ public class Lambda {
                     Lexer l = new Lexer(t.tokens());
                     Expression e = l.lexed();
                     dictionary.put(varName, e);
-                    System.out.println(input);
-                    System.out.println("Added " + e.toString() + " as " + input.substring(0, input.indexOf(" ")));
+                    System.out.println("Added " + e.toString() + " as " + input.substring(0, input.indexOf("=")).trim());
                 }
                 else if (dictionary.get(input) != null){
                     System.out.println(dictionary.get(input));
