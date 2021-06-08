@@ -168,14 +168,8 @@ public class Tokenizer extends Lambda{
                     continue;
                 }
                 int close = getCloseParenPos(pos, input.toString(), new Stack<>());
-                if (close + 1 == input.toString().length()){
-                    varList.add(input.toString().substring(pos));
-                    pos = close + 1;
-                }
-                else {
-                    varList.add(input.toString().substring(pos, close));
-                    pos = close;
-                }
+                varList.add(input.toString().substring(pos, close + 1));
+                pos = close + 1;
 //                ret += "(";
 //                pos++;
 //                parenpos++;
