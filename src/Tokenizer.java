@@ -152,7 +152,6 @@ public class Tokenizer extends Lambda{
         char in;
         String dictVaule;
         String ret = "";
-        int parenpos = 0;
         input = new Variable(extraneousParen(input).toString().trim());
         while (pos < input.toString().length() && pos >= 0){
             dictVaule = isVar(input.toString().substring(pos)); // if the dictionary contains the next token, dictValue becomes equal to it
@@ -170,27 +169,6 @@ public class Tokenizer extends Lambda{
                 int close = getCloseParenPos(pos, input.toString(), new Stack<>());
                 varList.add(input.toString().substring(pos, close + 1));
                 pos = close + 1;
-//                ret += "(";
-//                pos++;
-//                parenpos++;
-//                while (parenpos != 0){
-//                    in = getChar(pos);
-//                    if (in == '('){
-//                        ret += "(";
-//                        parenpos++;
-//                    }
-//                    else if (in == ')'){
-//                        ret += ")";
-//                        parenpos--;
-//                    }
-//                    else{
-//                        ret += in;
-//
-//                    }
-//                    pos++;
-//                }
-//                varList.add(ret);
-//                ret = "";
             }
             else if (in == 92 || in == 'λ') {
                 varList.add(makeFunction(pos).toString());
