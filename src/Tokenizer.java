@@ -167,15 +167,12 @@ public class Tokenizer extends Lambda{
                     varList.add(makeFunction(pos).toString());
                     continue;
                 }
-                int close = getCloseParenPos(pos, input.toString(), new Stack<>());
-                if (close + 1 == input.toString().length()){
-                    varList.add(input.toString().substring(pos));
-                    pos = close + 1;
-                }
-                else {
-                    varList.add(input.toString().substring(pos, close));
-                    pos = close;
-                }
+                int close = getCloseParenPos(0, input.toString().substring(pos), new Stack<>());
+                Tokenizer t = new Tokenizer(new Variable(input.toString().substring(pos+1, pos+close)));
+                ArrayList<String> inParens = t.tokens();
+                Lexer inParensLex = new Lexer(inParens);
+                varList.add(inParensLex.lexed().toString());
+                pos += close + 1;
 //                ret += "(";
 //                pos++;
 //                parenpos++;
