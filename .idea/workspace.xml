@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2bb77ff-46e3-4e42-a2b7-d3b9f0dccae2" name="Default Changelist" comment="bug fixes">
+    <list default="true" id="a2bb77ff-46e3-4e42-a2b7-d3b9f0dccae2" name="Default Changelist" comment="bug fixes, renaming classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Lambda/Lambda.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lambda/Lambda.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lambda/Lexer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lambda/Tokenizer.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Lambda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lambda.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -303,7 +299,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623083828198</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="bug fixes, renaming classes">
+      <created>1623347788436</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1623347788436</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -380,7 +383,8 @@
     <MESSAGE value="milestone 8 ish maybe" />
     <MESSAGE value="fixed lambdas" />
     <MESSAGE value="bug fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="bug fixes" />
+    <MESSAGE value="bug fixes, renaming classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug fixes, renaming classes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -393,30 +397,14 @@
           </properties>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.StringIndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="40" />
+        </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Parser.java</url>
-          <line>50</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Parser.java</url>
-          <line>83</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Parser.java</url>
-          <line>89</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Parser.java</url>
-          <line>94</line>
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Parser.java</url>
-          <line>102</line>
-          <option name="timeStamp" value="39" />
+          <url>file://$PROJECT_DIR$/src/Lambda.java</url>
+          <line>84</line>
+          <option name="timeStamp" value="41" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
