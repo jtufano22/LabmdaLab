@@ -1,12 +1,12 @@
 import java.util.*;
 
-public class Tokenizer extends Lambda{
+public class Parser extends Lambda{
 
     private Expression input;
     private int pos = 0;
     private static Set<String> keys = dictionary.keySet();
 
-    public Tokenizer (Expression input){
+    public Parser (Expression input){
         this.input = input;
     }
 
@@ -80,16 +80,16 @@ public class Tokenizer extends Lambda{
     }
 
     public Function makeFunction(int pos2) {
-        // in.indexOf(".") when defining Tokenizer t includes a close paren already. This is the extra one
+        // in.indexOf(".") when defining Parser t includes a close paren already. This is the extra one
         String in = input.toString();
         String current = in.substring(pos2);
         int cPP = getCloseParenPos(0, current, new Stack<String>());
-        Tokenizer t;
+        Parser t;
 
         //92 is backslash
         if (getChar(pos2) == '(') {
-            t = new Tokenizer(new Variable(current.substring(current.indexOf(".") + 1, cPP)));
-            Variable expr = new Variable(new Lexer(t.tokens()).lexed().toString());
+            t = new Parser(new Variable(current.substring(current.indexOf(".") + 1, cPP)));
+            Variable expr = new Variable(t.print(t.tokens()).toString());
 
             pos += cPP + 1;
             if (getChar(pos2 + 1) == 'λ') {
@@ -101,8 +101,8 @@ public class Tokenizer extends Lambda{
             }
         }
          if(getChar(pos2) == 'λ' || getChar(pos2) == 92) {
-             t = new Tokenizer(new Variable(current.substring(current.indexOf(".")+1)));
-             Variable expr = new Variable(new Lexer(t.tokens()).lexed().toString());
+             t = new Parser(new Variable(current.substring(current.indexOf(".")+1)));
+             Variable expr = new Variable(t.print(t.tokens()).toString());
              pos += current.length();
 
              return new Function(new Variable(current.substring(1, current.indexOf(".")).trim()),
@@ -154,14 +154,14 @@ public class Tokenizer extends Lambda{
     public ArrayList<String> tokens(){
         ArrayList<String> varList = new ArrayList<>();
         char in;
-        String dictVaule;
+        String dictValue;
         String ret = "";
         input = new Variable(extraneousParen(input).toString().trim());
         while (pos < input.toString().length() && pos >= 0){
-            dictVaule = isVar(input.toString().substring(pos)); // if the dictionary contains the next token, dictValue becomes equal to it
-            if (dictVaule != null){
-                varList.add(dictionary.get(dictVaule).toString());
-                pos += dictVaule.length(); // pos moves past the dictionary key to the next token
+            dictValue = isVar(input.toString().substring(pos)); // if the dictionary contains the next token, dictValue becomes equal to it
+            if (dictValue != null){
+                varList.add(dictionary.get(dictValue).toString());
+                pos += dictValue.length(); // pos moves past the dictionary key to the next token
                 continue;
             }
             in = getChar(pos);
@@ -171,10 +171,9 @@ public class Tokenizer extends Lambda{
                     continue;
                 }
                 int close = getCloseParenPos(0, input.toString().substring(pos), new Stack<>());
-                Tokenizer t = new Tokenizer(new Variable(input.toString().substring(pos+1, pos+close)));
+                Parser t = new Parser(new Variable(input.toString().substring(pos+1, pos+close)));
                 ArrayList<String> inParens = t.tokens();
-                Lexer inParensLex = new Lexer(inParens);
-                varList.add(inParensLex.lexed().toString());
+                varList.add(t.print(inParens).toString());
                 pos += close + 1;
             }
             else if (in == 92 || in == 'λ') {
@@ -198,5 +197,22 @@ public class Tokenizer extends Lambda{
         }
         pos = 0;
         return varList;
+    }
+    public Expression print(ArrayList<String> tokens){
+        int pos = 1;
+        Application app = null;
+        while (tokens.size() != 1 && pos < tokens.size()){
+            if (app == null){
+                app = new Application(new Variable(tokens.get(pos-1)), new Variable(tokens.get(pos)));
+            }
+            else{
+                app = new Application(app, new Variable(tokens.get(pos)));
+            }
+            pos++;
+        }
+        if (tokens.size() == 1){
+            return new Variable(tokens.get(0));
+        }
+        return app;
     }
 }
