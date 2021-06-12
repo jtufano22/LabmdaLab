@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2bb77ff-46e3-4e42-a2b7-d3b9f0dccae2" name="Default Changelist" comment="bug fixes, renaming classes">
+    <list default="true" id="a2bb77ff-46e3-4e42-a2b7-d3b9f0dccae2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Lambda/Lambda.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lambda/Lambda.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lambda/META-INF/Lambda.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lambda/META-INF/Lambda.kotlin_module" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Lambda/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lambda/test.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Lambda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lambda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test.java" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -95,6 +97,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Parser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Parser" />
+      <module name="Lambda" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Prompt" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Prompt" />
       <module name="Lambda" />
@@ -119,8 +128,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Lambda" />
-        <item itemvalue="Application.Tokenizer" />
+        <item itemvalue="Application.Parser" />
         <item itemvalue="Application.test" />
+        <item itemvalue="Application.Tokenizer" />
         <item itemvalue="Application.Prompt" />
       </list>
     </recent_temporary>
@@ -154,7 +164,7 @@
       <workItem from="1622569160516" duration="3800000" />
       <workItem from="1622852269360" duration="18460000" />
       <workItem from="1623075989811" duration="5992000" />
-      <workItem from="1623431628170" duration="6280000" />
+      <workItem from="1623431628170" duration="18524000" />
     </task>
     <task id="LOCAL-00001" summary="wee wee">
       <created>1620668550228</created>
@@ -261,7 +271,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623347788436</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="all milestones completed! some slight bugs with the given examples.">
+      <created>1623438452437</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1623438452437</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -302,7 +319,8 @@
     <MESSAGE value="fixed lambdas" />
     <MESSAGE value="bug fixes" />
     <MESSAGE value="bug fixes, renaming classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="bug fixes, renaming classes" />
+    <MESSAGE value="all milestones completed! some slight bugs with the given examples." />
+    <option name="LAST_COMMIT_MESSAGE" value="all milestones completed! some slight bugs with the given examples." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

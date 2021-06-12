@@ -2,17 +2,23 @@ import java.util.*;
 
 public class Parser extends Lambda{
 
+    // input is the input; pos is the current position in the input; keys is the set of keys in the hashmap used to store definitions
     private Expression input;
     private int pos = 0;
     private static Set<String> keys = dictionary.keySet();
+    private final int BACKSLASH = 92;
+
 
     public Parser (Expression input){
         this.input = input;
     }
 
+
+    // helper function to find the character of an expression at a given pos
     public char getChar(int pos){
         return input.toString().charAt(pos);
     }
+
 
     public String isVar(String in){
         if (in.contains(" ")){
@@ -26,9 +32,11 @@ public class Parser extends Lambda{
         return null;
     }
 
+
+    //finds the position of the closed parenthesis that is associated with the first open paren given a string, a starting position, and a stack
     public int getCloseParenPos(int pos, String in, Stack<String> parens){
         //System.out.println("Pos: " + pos + "; In: " + in + "; Parens: " + parens);
-        if(pos >= in.length()) {
+        if(pos >= in.length() || pos < 0) {
             return -1;
         }
         else if (in.charAt(pos) == ')' && parens.size() == 1) {
@@ -47,62 +55,30 @@ public class Parser extends Lambda{
             return getCloseParenPos(++pos, in, parens);
     }
 
-    public ArrayList<String> smartSplit(String in, ArrayList<String> tokens, String var) {
-        int close;
-        char inChar = in.charAt(0);
-        //try statement used if the substring goes out of bounds, it was the easiest idea i thought of lol
-        try {
-            if (inChar == '(') {
-                if (!var.equals("")){
-                    tokens.add(var);
-                    var = "";
-                }
-                close = getCloseParenPos(0, in, new Stack<>()) + 1;
-                tokens.add(in.substring(0, close));
-                return smartSplit(in.substring(close), tokens, var);
-            } else if (inChar == ' ') {
-                var = "";
-                return smartSplit(in.substring(1), tokens, var);
-            } else {
-                var += inChar;
-                if (in.length() > 1 && in.charAt(1) == ' '){
-                    tokens.add(var);
-                    return smartSplit(in.substring(1), tokens, var);
-                }
-                return smartSplit(in.substring(1), tokens, var);
-            }
-        } catch (Exception StringIndexOutOfBoundsException) {
-            if (!var.equals("")){
-                tokens.add(var);
-            }
-            return tokens;
-        }
-    }
 
+    // makes a function given a starting position in the input
     public Function makeFunction(int pos2) {
-        // in.indexOf(".") when defining Parser t includes a close paren already. This is the extra one
         String in = input.toString();
         String current = in.substring(pos2);
         int cPP = getCloseParenPos(0, current, new Stack<String>());
-        Parser t;
+        Parser p;
 
-        //92 is backslash
         if (getChar(pos2) == '(') {
-            t = new Parser(new Variable(current.substring(current.indexOf(".") + 1, cPP)));
-            Variable expr = new Variable(t.print(t.tokens()).toString());
+            p = new Parser(new Variable(current.substring(current.indexOf(".") + 1, cPP)));
+            Variable expr = new Variable(p.print(p.tokens()).toString());
 
             pos += cPP + 1;
             if (getChar(pos2 + 1) == 'λ') {
                 return new Function(new Variable(current.substring(current.indexOf("λ") + 1, current.indexOf(".")).trim()),
                         expr);
-            } else if (getChar(pos2 + 1) == 92) {
-                return new Function(new Variable(current.substring(current.indexOf(92) + 1, current.indexOf(".")).trim()),
+            } else if (getChar(pos2 + 1) == BACKSLASH) {
+                return new Function(new Variable(current.substring(current.indexOf(BACKSLASH) + 1, current.indexOf(".")).trim()),
                         expr);
             }
         }
-         if(getChar(pos2) == 'λ' || getChar(pos2) == 92) {
-             t = new Parser(new Variable(current.substring(current.indexOf(".")+1)));
-             Variable expr = new Variable(t.print(t.tokens()).toString());
+         if(getChar(pos2) == 'λ' || getChar(pos2) == BACKSLASH) {
+             p = new Parser(new Variable(current.substring(current.indexOf(".")+1)));
+             Variable expr = new Variable(p.print(p.tokens()).toString());
              pos += current.length();
 
              return new Function(new Variable(current.substring(1, current.indexOf(".")).trim()),
@@ -111,52 +87,49 @@ public class Parser extends Lambda{
         return null;
     }
 
-    public Expression extraneousParen(Expression input) {
-        ArrayList<String> tokens = smartSplit(input.toString(), new ArrayList<>(), "");
-        int pos2;
-        for (int i = 0; i < tokens.size(); i++) {
-            pos2 = 0;
-            String token = tokens.get(i);
-            while (getCloseParenPos(0, token, new Stack<>()) == token.length() - 1){
-                token = tokens.get(i);
-                if (token.charAt(pos2 + 1) == '(' && getCloseParenPos(1, token, new Stack<>()) == token.length() - 2){
-                    tokens.set(i, token.substring(1, token.length()-1));
-                }
-                else if (token.charAt(pos2 + 1) == 92){
-                    tokens.set(i, token);
-                    break;
-                }
-                else{
-                    if (token.substring(token.indexOf("(")+1, token.indexOf(")")).length() == 1){
-                        tokens.set(i, String.valueOf(token.charAt(1)));
-                    }
-                    break;
-                }
-            }
-        }
 
-        String fixedInput = "";
-        for(int i = 0; i < tokens.size(); i++){
-            if (i+1 == tokens.size()){
-                return new Variable(fixedInput + " " + tokens.get(i));
-            }
-            else if (i == 0){
-                fixedInput += tokens.get(i);
-            }
-            else{
-                fixedInput += " " + tokens.get(i);
-            }
-        }
+    // removes all extraneous parentheses by using the fact stated in line 131 of Lambda.java
+    // and by checking if two pairs of parentheses are right after one another such as in ((a)), but not in ((a b) c)
+    // Once it finds a redundancy, it omits the redundancy and moves on to the next open parenthesis in the expression
+    public Expression extraneousParen(Expression e) {
+        // p is needed for the getCloseParenPos() method; expr is the given expression as a String;
+        // parenPos is the position of the current open parenthesis; cPP is the corresponding closed parenthesis
+        Parser p = new Parser(new Variable(""));
+        String expr = e.toString();
+        int parenPos = expr.indexOf(OPEN_PAREN);
+        int cPP = p.getCloseParenPos(parenPos, expr, new Stack<>());
 
-        return null;
+        while(parenPos >= 0) {
+            String inParen = expr.substring(parenPos, cPP+1); // everything inside the current pair of parentheses
+            if(expr.charAt(parenPos+1) == OPEN_PAREN && expr.charAt(cPP-1) == CLOSE_PAREN) { // read line 92 in Parser.java
+                expr = expr.substring(0, parenPos+1) + expr.substring(parenPos+2, cPP-1) + expr.substring(cPP);
+            }
+            else if(!inParen.contains(" ") && !inParen.contains("λ")) { // read line 91 in Parser.java
+                try { //in cases such as (((a))), the position of the close parenthesis is also the last position in the string so it will throw an exception
+                    expr = expr.substring(0, parenPos) + expr.substring(parenPos + 1, cPP) + expr.substring(cPP + 1);
+                }
+                catch(StringIndexOutOfBoundsException ex) {
+                    expr = expr.substring(0, parenPos) + expr.substring(parenPos + 1, cPP);
+                }
+            }
+            parenPos = expr.indexOf(OPEN_PAREN, parenPos+1);
+            cPP = p.getCloseParenPos(parenPos, expr, new Stack<>());
+        }
+        return new Variable(expr);
     }
 
+
+    // main parser/lexer
     public ArrayList<String> tokens(){
+        // varList is the list of expressions that will (in most cases) be passed into this.print()
         ArrayList<String> varList = new ArrayList<>();
+        // in will be the current character; dictValue will only be assigned a non-null value if it is a key in the hashmap for stored values; ret is what will be added to varList
         char in;
         String dictValue;
         String ret = "";
+        //cleans up the input before doing any work
         input = new Variable(extraneousParen(input).toString().trim());
+
         while (pos < input.toString().length() && pos >= 0){
             dictValue = isVar(input.toString().substring(pos)); // if the dictionary contains the next token, dictValue becomes equal to it
             if (dictValue != null){
@@ -164,9 +137,10 @@ public class Parser extends Lambda{
                 pos += dictValue.length(); // pos moves past the dictionary key to the next token
                 continue;
             }
+
             in = getChar(pos);
-            if (in == '('){
-                if (getChar(pos+1) == 92 || getChar(pos+1) == 'λ') {
+            if (in == '('){ // handles applications and functions
+                if (getChar(pos+1) == BACKSLASH || getChar(pos+1) == 'λ') {
                     varList.add(makeFunction(pos).toString());
                     continue;
                 }
@@ -176,21 +150,26 @@ public class Parser extends Lambda{
                 varList.add(t.print(inParens).toString());
                 pos += close + 1;
             }
-            else if (in == 92 || in == 'λ') {
+
+            else if (in == BACKSLASH || in == 'λ') { // handles functions
                 varList.add(makeFunction(pos).toString());
             }
-            else{
+
+            else{ //ignore spaces. if the character is not followed by a space, add the character to ret; otherwise, add ret + character to varList and reset ret
                 if (in == ' '){
                     pos++;
                 }
+
                 else{
                     if (pos+1 != input.toString().length() && getChar(pos+1) != ' '){
                         ret += getChar(pos);
                     }
+
                     else{
                         varList.add(ret + getChar(pos));
                         ret = "";
                     }
+
                     pos++;
                 }
             }
@@ -198,6 +177,9 @@ public class Parser extends Lambda{
         pos = 0;
         return varList;
     }
+
+
+    // makes sense of the list given by the tokens() method
     public Expression print(ArrayList<String> tokens){
         int pos = 1;
         Application app = null;
